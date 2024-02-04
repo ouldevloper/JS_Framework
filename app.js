@@ -1,5 +1,8 @@
 // app.js
 
+
+require('components/home.js');
+
 // Initialize the framework
 const app = new Framework();
 // Define SPA routes

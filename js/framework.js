@@ -1,3 +1,4 @@
+console.log('hello world')
 class Framework {
     constructor() {
         this.routes = {};
