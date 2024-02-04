@@ -12,7 +12,10 @@ class Framework {
             const component = this.routes[path] || NotFoundComponent;
             const appContainer = document.querySelector('#app');
             const instance = new component();
-            instance.bind();
+            if(typeof instance.bind === 'function') {
+                instance.bind()
+            } 
+
             appContainer.innerHTML = instance.render();
         };
         const navigate = (path) => {
