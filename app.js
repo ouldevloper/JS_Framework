@@ -9,4 +9,3 @@ app.route('/databinding', DataBindingComponent);
 // Start the application
 app.start();
 
-framework.navigate('/about');
