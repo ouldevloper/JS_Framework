@@ -1,0 +1,22 @@
+{
+  "name": "jsfarmework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ouldevloper/JS_Framework.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ouldevloper/JS_Framework/issues"
+  },
+  "homepage": "https://github.com/ouldevloper/JS_Framework#readme",
+  "dependencies": {
+    "static-server": "^2.2.1"
+  }
+}
