@@ -1,33 +1,40 @@
 
 
-class Framework {
-    constructor() {
-        console.log("constract")
-        this.routes = {};
+function Framework() {
+    console.log("constract");
+    const routes = {};
+
+    function route(path, component) {
+        routes[path] = component;
     }
-    route(path, component) {
-        this.routes[path] = component;
-    }
-    start() {
+
+    function start() {
         const navigateTo = () => {
             const path = window.location.hash.slice(1);
-            const component = this.routes[path] || NotFoundComponent;
+            const component = routes[path] || NotFoundComponent;
             const appContainer = document.querySelector('#app');
             const instance = new component();
-            if(typeof instance.bind === 'function') {
-                instance.bind()
-            } 
-
+            if (typeof instance.bind === 'function') {
+                instance.bind();
+            }
             appContainer.innerHTML = instance.render();
         };
-        const navigate = (path) => {
+
+        function navigate(path) {
             window.location.hash = path;
             navigateTo();
-        };
+        }
+
         window.addEventListener('hashchange', navigateTo);
         navigateTo();
+
         return {
             navigate,
         };
     }
+
+    return {
+        route,
+        start,
+    };
 }
