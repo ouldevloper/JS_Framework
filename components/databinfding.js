@@ -5,6 +5,4 @@ const DataBindingComponent = () => {
             `;
 }
 
-
-
 export default DataBindingComponent

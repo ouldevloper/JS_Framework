@@ -1,4 +1,11 @@
-// app.js
+/*
+ * Created on Fri Feb 09 2024
+ * Author : Abdellah Oulahyane
+ * Copyright (c) 2024
+ */
+
+
+
 
 import { AboutComponent } from "./components/about";
 
@@ -36,12 +43,12 @@ class Framework {
     }
 }
 
-// const  AboutComponent = ()=> {
-//     return `
-//             <h1>About Us</h1>
-//             <p>We are the creators of this SPA.</p>
-//         `;
-// }
+const  AboutComponent = (params)=> {
+    return `
+            <h1>About Us ${parmas?.id}</h1>
+            <p>We are the creators of this SPA.</p>
+        `;
+}
 
 
 const HomeComponent = () => {
@@ -60,12 +67,13 @@ const NotFoundComponent = ()=>{
 
 // Initialize the framework
 const app = new Framework();
-// Define SPA routes
 
 
 
 
-app.route('/', HomeComponent);
+
+
+app.route('/',      HomeComponent);
 app.route('/about', AboutComponent);
 
 
