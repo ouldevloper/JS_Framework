@@ -7,40 +7,79 @@
 
 
 
-import { AboutComponent } from "./components/about";
+// import { AboutComponent } from "./components/about";
 
 
 
 
 
-class Framework {
-    constructor() {
-        console.log("constract")
-        this.routes = {};
+
+function Framework() {
+    console.log("constract");
+    const routes = {};
+
+    function getPath($path){
+        return '/'+$path.replace(/\/+/g, '/').replace(/^\/|\/$/g, '')
     }
-    route(path, component) {
-        this.routes[path] = component;
+    function getParams($path, $route) {
+        $paths = getPath($path).split('/')
+        $routes = getPath($path).split('/')
+        //$queryes    = $routes?.map($item => $item.replace(/\{.+\}/,'(.+)'))
+        if ($paths.length !== $routes.length) {
+            return [];
+        }
+        var patt = new RegExp(/\{(.+)\}/)
+        $params = [];
+        for (var $i = 0; $i < $routes.length; $i++) {
+            if (patt.test($routes[$i])) {
+                $params[$routes[$i].replace('{', '').replace('}', '')] = $paths[$i] ?? null;
+            }
+        }
+        return $params ?? [];
     }
-    start() {
+
+
+    
+    function route($path, $component) {
+
+        $path = getPath($path).split('/')
+        console.log('1 - $path, routes[path]', $path, routes)
+        routes[$path] = $component
+    }
+
+    function start() {
         const navigateTo = () => {
             const path = window.location.hash.slice(1);
-            const component = this.routes[path] || NotFoundComponent;
+            route = getPath(path)
+            console.log(route, path, routes)
+            const component = routes[route] || NotFoundComponent;
             const appContainer = document.querySelector('#app');
-            const instance = component();
-            
-
+            const params = getParams(path, route)
+            console.log('params : ', params);
+            const instance = component(params);
+            if (typeof instance.bind === 'function') {
+                instance.bind();
+            }
             appContainer.innerHTML = instance;
         };
-        const navigate = (path) => {
+
+        function navigate(path) {
             window.location.hash = path;
             navigateTo();
-        };
+        }
+
         window.addEventListener('hashchange', navigateTo);
         navigateTo();
+
         return {
             navigate,
         };
     }
+
+    return {
+        route,
+        start,
+    };
 }
 
 const  AboutComponent = (params)=> {
@@ -74,7 +113,7 @@ const app = new Framework();
 
 
 app.route('/',      HomeComponent);
-app.route('/about', AboutComponent);
+app.route('/about/{id}', AboutComponent);
 
 
 app.start();
