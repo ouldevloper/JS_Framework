@@ -9,15 +9,35 @@ function Framework() {
     console.log("constract");
     const routes = {};
 
-    function getParams(){
-        
+    function getParams($path, $route){
+        $route = '/home/{id}/{name}';
+        $path  = '/home/id/name';
+
+        $paths      = $path.replace(/\/+/g, '/').replace(/^\/|\/$/g, '').split('/')
+        $routes     = $route.replace(/\/+/g, '/').replace(/^\/|\/$/g, '').split('/')
+        //$queryes    = $routes?.map($item => $item.replace(/\{.+\}/,'(.+)'))
+
+        $vaslid = false;
+        if($path.lenght() !== $routes.lenght()){
+            $valid = false;
+        }
+        var patt = new RegExp('/\{(.+)\}/')
+        $params = [];
+        for (var $i=0; $i<$routes.lenght(); $i++){
+            if($routes[$i].test){
+                
+            }
+        }
+
+        $valid = patt.test($path)
+        console.log($paths, $routes, $query, $valid)
     }
     function checkRoute(route){
         url = 
     }
-    function route(path, component, params={}) {
+    function route(path, component) {
         params = 
-        routes[path] = {'component':component, 'params':params};
+        routes[path] = component
     }
 
     function start() {
