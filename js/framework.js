@@ -9,35 +9,32 @@ function Framework() {
     console.log("constract");
     const routes = {};
 
-    function getParams($path, $route){
+    function getParams($path, $route) {
         $route = '/home/{id}/{name}';
-        $path  = '/home/id/name';
+        $path = '/home/id/name';
 
-        $paths      = $path.replace(/\/+/g, '/').replace(/^\/|\/$/g, '').split('/')
-        $routes     = $route.replace(/\/+/g, '/').replace(/^\/|\/$/g, '').split('/')
+        $paths = $path.replace(/\/+/g, '/').replace(/^\/|\/$/g, '').split('/')
+        $routes = $route.replace(/\/+/g, '/').replace(/^\/|\/$/g, '').split('/')
         //$queryes    = $routes?.map($item => $item.replace(/\{.+\}/,'(.+)'))
 
-        $vaslid = false;
-        if($path.lenght() !== $routes.lenght()){
-            $valid = false;
+        if ($paths.length !== $routes.length) {
+            retrun[];
         }
-        var patt = new RegExp('/\{(.+)\}/')
+        var patt = new RegExp(/\{(.+)\}/)
         $params = [];
-        for (var $i=0; $i<$routes.lenght(); $i++){
-            if($routes[$i].test){
-                
+        for (var $i = 0; $i < $routes.length; $i++) {
+            if (patt.test($routes[$i])) {
+                $params[$routes[$i].replace('{', '').replace('}', '')] = $paths[$i] ?? null;
             }
         }
-
-        $valid = patt.test($path)
-        console.log($paths, $routes, $query, $valid)
+        return params ?? [];
     }
-    function checkRoute(route){
+    function checkRoute(route) {
         url = 
     }
     function route(path, component) {
-        params = 
-        routes[path] = component
+        params =
+            routes[path] = component
     }
 
     function start() {
