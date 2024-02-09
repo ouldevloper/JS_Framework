@@ -15,48 +15,58 @@
 
 
 function Framework() {
-    console.log("constract");
-    const routes = {};
+    let routes = {};
 
     function getPath($path){
         return '/'+$path.replace(/\/+/g, '/').replace(/^\/|\/$/g, '')
     }
     function getParams($path, $route) {
-        $paths = getPath($path).split('/')
-        $routes = getPath($path).split('/')
-        //$queryes    = $routes?.map($item => $item.replace(/\{.+\}/,'(.+)'))
-        if ($paths.length !== $routes.length) {
+        
+        $paths = $path.split('/')
+        $_routes = getPath($route).split('/')
+        console.log($_routes, $paths)
+        if ($paths.length !== $_routes.length) {
+            console.log('Not found...');
             return [];
         }
         var patt = new RegExp(/\{(.+)\}/)
         $params = [];
-        for (var $i = 0; $i < $routes.length; $i++) {
-            if (patt.test($routes[$i])) {
-                $params[$routes[$i].replace('{', '').replace('}', '')] = $paths[$i] ?? null;
+        
+        for (var $i = 0; $i < $_routes.length; $i++) {
+            console.log($i);
+            if (patt.test($_routes[$i])) {
+                console.log('found')
+                $params[$_routes[$i].replace('{', '').replace('}', '')] = $paths[$i] ?? null;
             }
         }
         return $params ?? [];
     }
-
-
     
     function route($path, $component) {
-
-        $path = getPath($path).split('/')
-        console.log('1 - $path, routes[path]', $path, routes)
         routes[$path] = $component
+    }
+
+    function getRoute($path){   
+        for(var route in routes){
+            
+            query  = route.replace(/\{(.+)\}/g, '(.+)').replace(/\//g, '\\/')
+            var patt = new RegExp('^'+query+'$')
+            if (patt.test($path)) {
+                return {'compenent':routes[route], 'path':route};
+            }
+        }
+        return ''
     }
 
     function start() {
         const navigateTo = () => {
-            const path = window.location.hash.slice(1);
-            route = getPath(path)
-            console.log(route, path, routes)
-            const component = routes[route] || NotFoundComponent;
+            const path = getPath(window.location.hash.slice(1));
+            const route = getRoute(path)
+            const component = route['compenent'] || NotFoundComponent;
             const appContainer = document.querySelector('#app');
-            const params = getParams(path, route)
-            console.log('params : ', params);
-            const instance = component(params);
+            const params = getParams(path, route['path'])
+            console.log(params)
+            const instance = component(params??null);
             if (typeof instance.bind === 'function') {
                 instance.bind();
             }
@@ -84,7 +94,7 @@ function Framework() {
 
 const  AboutComponent = (params)=> {
     return `
-            <h1>About Us ${parmas?.id}</h1>
+            <h1>About Us ${params?.id}</h1>
             <p>We are the creators of this SPA.</p>
         `;
 }
