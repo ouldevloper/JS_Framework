@@ -1,4 +1,3 @@
-const NotFoundComponent = ()=>{
-    return "hello world";
+export const NotFoundComponent = ()=>{
+    return "Not Found";
 }
-export default NotFoundComponent
