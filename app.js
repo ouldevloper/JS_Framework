@@ -24,18 +24,14 @@ function Framework() {
         
         $paths = $path.split('/')
         $_routes = getPath($route).split('/')
-        console.log($_routes, $paths)
         if ($paths.length !== $_routes.length) {
-            console.log('Not found...');
             return [];
         }
         var patt = new RegExp(/\{(.+)\}/)
         $params = [];
         
         for (var $i = 0; $i < $_routes.length; $i++) {
-            console.log($i);
             if (patt.test($_routes[$i])) {
-                console.log('found')
                 $params[$_routes[$i].replace('{', '').replace('}', '')] = $paths[$i] ?? null;
             }
         }
@@ -48,7 +44,7 @@ function Framework() {
 
     function getRoute($path){   
         for(var route in routes){
-            
+
             query  = route.replace(/\{(.+)\}/g, '(.+)').replace(/\//g, '\\/')
             var patt = new RegExp('^'+query+'$')
             if (patt.test($path)) {
@@ -65,7 +61,6 @@ function Framework() {
             const component = route['compenent'] || NotFoundComponent;
             const appContainer = document.querySelector('#app');
             const params = getParams(path, route['path'])
-            console.log(params)
             const instance = component(params??null);
             if (typeof instance.bind === 'function') {
                 instance.bind();
@@ -110,8 +105,6 @@ const HomeComponent = () => {
 const NotFoundComponent = ()=>{
     return "Not Found";
 }
-
-
 
 
 // Initialize the framework
