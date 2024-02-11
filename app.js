@@ -6,7 +6,7 @@
 
 import { AboutComponent } from './components/about.js';
 import { HomeComponent } from './components/home.js';
-import Framework from './js/framework.mjs';
+import Framework, { useState } from './js/framework.mjs';
 
 
 
@@ -29,7 +29,10 @@ const app = new Framework();
 
 
 
-
+const [id, setId] = useState(1234);
+console.log('id, setId:', id, setId)
+setId(1234);
+console.log('id, setId:', id, setId)
 
 app.route('/',      HomeComponent);
 app.route('/about/{id}', AboutComponent);
